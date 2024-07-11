@@ -95,9 +95,13 @@ body {
     color: white;
     margin-left: 5%;
     font-size: 50px;
-    border-bottom: 5px solid #86C232;
+    /* border-bottom: 5px solid #86C232; */
+    position: relative;
 }
+h1::after{
+    
 
+}
 .page1 h2 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
@@ -318,3 +322,4 @@ body {
         font-size: 9px;
     }
 }
+/* End Here */
