@@ -117,6 +117,9 @@ h1::after{
 h1:hover::after,h2:hover::after{
     width:0;
 }
+.h1last{
+    color:#86C232
+}
 .page1 h2 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
