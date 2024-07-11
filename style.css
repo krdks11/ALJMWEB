@@ -9,6 +9,8 @@ header {
     background-color: #222629;
     display: flex;
     justify-content: center;
+    position: sticky;
+    top: 0px;
 }
 
 .title-nav-containter {
@@ -66,17 +68,53 @@ nav ul {
 
 
 body {
+    background-color: #222629;
+}
+
+/*  styles for Page 1 Container */
+
+.page1 {
+    width: 100%;
+    height: 90vh;
     background-color: #474B4F;
 }
-/*  styles for Page 1 Container */
+
+.page1 h1 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    display: inline-block;
+    padding-top: 30px;
+    color: white;
+    margin-left: 5%;
+    font-size: 50px;
+    border-bottom: 5px solid #86C232;
+}
+
+.page1 h2 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 500;
+   color: white;
+   margin-top: 15px;
+   margin-bottom: 35px;
+   margin-left: 5%;
+   font-size: 40px;
+}
+
 .container{
     width:100%;
+    height: 400px;
     display:flex;
-    height:300px;
+    justify-content: space-evenly;
     gap:5px;
 }
+
+.container_image {
+    height: 100%;
+    width: 300px;
+    display: flex;
+}
 .container_image img{
-    width:50%;
+    width:80%;
     height:100%;
     object-fit:cover;
     border-radius:10px;
@@ -86,4 +124,24 @@ body {
 
 .container img:hover{
     width:100%;
+    
 }
+
+.img-title {
+    width: 100px;
+    height: 35px;
+    background-color: rgb(255, 255, 255,0.7);
+    color: #86C232;
+    font-size: 18px;
+    position: relative;
+    top: 350px;
+    right: 130px;
+    z-index: 2;
+    border: 1px solid black;
+    border-radius: 22px;
+    padding: 5px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
