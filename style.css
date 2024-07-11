@@ -23,14 +23,15 @@ header {
 
 .title {
     font-family: "IBM Plex Sans", sans-serif;
-    font-weight: 600;
+    font-weight: 300;
     font-style: normal;
     color: white;
-    font-size: 30px;
+    font-size: 35px;
 }
 
 nav {
     width: 50%;
+    /* position: relative; */
 }
 
 nav ul {
@@ -51,10 +52,10 @@ nav ul li a {
     width: 100px;
     height: 40px;
     border-radius: 20px;
-    
+
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     font-size: 22px;
     position: relative;
     top: 2px;
@@ -98,61 +99,76 @@ body {
     /* border-bottom: 5px solid #86C232; */
     position: relative;
 }
-h1::after{
-    
-
-}
 .page1 h2 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
-   color: rgba(255, 255, 255, 0.667);
-   margin-top: 15px;
-   margin-bottom: 35px;
-   margin-left: 5%;
-   font-size: 35px;
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    margin-left: 5%;
+    font-size: 40px;
 }
 
-.container{
-    width:100%;
+.container {
+    width: 100%;
     height: 400px;
-    display:flex;
-    justify-content: space-evenly;
-    gap:5px;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    /* justify-content: space-evenly; */
+    gap:2px;
 }
 
 .container_image {
     height: 100%;
-    width: 300%;
+    width: 200px;
     display: flex;
-    position:relative;
-}
-.container_image img{
-    width:80%;
-    height:100%;
-    object-fit:cover;
-    border-radius:10px;
-    transition:all ease-out .3s;
+    /* justify-content: center; */
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    transition: width 0.3s ease;
 }
 
-.container img:hover{
-    width:100%;
+.container_image img {
+    width: 80%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    /* position:relative; */
+}
+
+.container_image:hover {
+    width: 250px;
+}
+
+.container img:hover {
+    width: 100%;
+
 }
 
 .img-title {
-    width:50%;
-    height: 18px;
+    width: 100px;
+    height: 35px;
     background-color: rgb(255, 255, 255,0.7);
     color: #86C232;
-    font-size: 20px;
-    position: absolute;
+    font-size: 18px;
+    position: relative;
+    top: 350px;
+    /* right: 130px; */
+    right: 50%;
     z-index: 2;
-    top:90%;
-    left:10%;
     border: 1px solid black;
-    border-radius: 10px;
-    padding: 8px;
-    text-align: center;
-} 
+    border-radius: 22px;
+    padding: 5px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; 
+    transform: translateX(-50%);
+}
 
 
 /* responsive code */
@@ -167,10 +183,10 @@ h1::after{
         height: 32px;
         /* border-radius: 16px; */
         font-size: 12.8px;
-        
+
     }
 
-    nav ul li a:hover{
+    nav ul li a:hover {
         font-size: 17.6px;
     }
 
@@ -181,49 +197,53 @@ h1::after{
         font-size: 40px;
         border-bottom: 5px solid #86C232;
     }
-    
+
     .page1 h2 {
         font-weight: 300;
         font-size: 36px;
     }
 }
+
 @media (max-width : 905px) {
     .title {
         font-size: 40px;
         width: 10000px;
     }
+
     .hamburger {
         display: inline-block;
     }
 
     nav ul {
-    display: block;
-    position: fixed;
-    width: 50%;
-    height: 169px;
-    top: 90px;
-    right: -50%;
-    text-align: center;
-    background-color: #222629;
-    transition: all .5s;
+        display: block;
+        position: fixed;
+        width: 50%;
+        height: 169px;
+        top: 90px;
+        right: -50%;
+        text-align: center;
+        background-color: #222629;
+        transition: all .5s;
+        z-index: 5;
     }
 
     nav ul li a {
         width: 100%;
-        background-color: rgba(255, 255, 255,0.7);
+        background-color: rgba(255, 255, 255, 0.7);
         color: black;
         border-bottom: 2px solid rgb(134, 194, 50);
         border-radius: 0px;
         font-size: 20px;
     }
 
-    nav ul li a:hover{
+    nav ul li a:hover {
         background-color: #86C232;
         color: white;
         top: 0px;
         font-size: 21px;
     }
-    #checkbtn:checked ~ ul {
+
+    #checkbtn:checked~ul {
         right: 0px;
     }
 
@@ -234,7 +254,7 @@ h1::after{
         font-size: 30px;
         border-bottom: 5px solid #86C232;
     }
-    
+
     .page1 h2 {
         font-weight: 300;
         font-size: 27px;
@@ -255,14 +275,14 @@ h1::after{
         font-size: 23px;
         border-bottom: 5px solid #86C232;
     }
-    
+
     .page1 h2 {
         font-weight: 300;
         font-size: 18px;
     }
 
-    .container{
-        flex-wrap: wrap;
+    .container {
+        /* flex-wrap: wrap; */
     }
 }
 
@@ -278,14 +298,14 @@ h1::after{
         font-size: 15px;
         border-bottom: 5px solid #86C232;
     }
-    
+
     .page1 h2 {
         font-weight: 300;
         font-size: 12.5px;
     }
 }
 
-@media (max-width : 340px) {
+@media (max-width : 362px) {
     .title {
         font-size: 17px;
     }
@@ -297,7 +317,7 @@ h1::after{
         font-size: 12px;
         border-bottom: 5px solid #86C232;
     }
-    
+
     .page1 h2 {
         font-weight: 300;
         font-size: 10px;
@@ -306,20 +326,20 @@ h1::after{
 
 @media (max-width : 300px) {
     .title {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .page1 h1 {
         font-weight: 400;
         padding-top: 30px;
         margin-left: 5%;
-        font-size: 9px;
+        font-size: 16px;
         border-bottom: 5px solid #86C232;
     }
-    
+
     .page1 h2 {
         font-weight: 300;
-        font-size: 9px;
+        font-size: 14px;
     }
 }
 /* End Here */
