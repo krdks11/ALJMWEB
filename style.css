@@ -23,15 +23,14 @@ header {
 
 .title {
     font-family: "IBM Plex Sans", sans-serif;
-    font-weight: 300;
+    font-weight: 600;
     font-style: normal;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 nav {
     width: 50%;
-    /* position: relative; */
 }
 
 nav ul {
@@ -93,11 +92,11 @@ body {
 .page1 h2 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
-   color: white;
+   color: rgba(255, 255, 255, 0.667);
    margin-top: 15px;
    margin-bottom: 35px;
    margin-left: 5%;
-   font-size: 40px;
+   font-size: 35px;
 }
 
 .container{
@@ -110,8 +109,9 @@ body {
 
 .container_image {
     height: 100%;
-    width: 300px;
+    width: 300%;
     display: flex;
+    position:relative;
 }
 .container_image img{
     width:80%;
@@ -119,29 +119,25 @@ body {
     object-fit:cover;
     border-radius:10px;
     transition:all ease-out .3s;
-    /* position:relative; */
 }
 
 .container img:hover{
     width:100%;
-    
 }
 
 .img-title {
-    width: 100px;
-    height: 35px;
+    width:50%;
+    height: 18px;
     background-color: rgb(255, 255, 255,0.7);
     color: #86C232;
-    font-size: 18px;
-    position: relative;
-    top: 350px;
-    right: 130px;
+    font-size: 20px;
+    position: absolute;
     z-index: 2;
+    top:90%;
+    left:10%;
     border: 1px solid black;
-    border-radius: 22px;
-    padding: 5px 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+} 
 
