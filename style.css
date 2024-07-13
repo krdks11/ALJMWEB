@@ -309,7 +309,7 @@ section.second {
     nav ul {
         display: block;
         position: fixed;
-        width: 30%;
+        width: 45%;
         height: 200px;
         top: 90px;
         right: -50%;
@@ -408,19 +408,19 @@ section.second {
 
 @media (max-width : 515px) {
     .title {
-        font-size: 20px;
+        font-size: 23.5px;
     }
 
     .page1 h1 {
         font-weight: 400;
         padding-top: 30px;
         margin-left: 5%;
-        font-size: 15px;
+        font-size: 21px;
     }
 
     .page1 h2 {
         font-weight: 300;
-        font-size: 12.5px;
+        font-size: 18px;
     }
 
     .page1 h1::after{
@@ -440,21 +440,21 @@ section.second {
     }
 }
 
-@media (max-width : 362px) {
+@media (max-width : 412px) {
     .title {
-        font-size: 16px;
+        font-size: 19px;
     }
 
     .page1 h1 {
         font-weight: 400;
         padding-top: 30px;
         margin-left: 5%;
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .page1 h2 {
         font-weight: 300;
-        font-size: 10px;
+        font-size: 14px;
     }
 
     .page1 h1::after{
@@ -470,21 +470,21 @@ section.second {
     }
 }
 
-@media (max-width : 314px) {
+@media (max-width : 343px) {
     .title {
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .page1 h1 {
         font-weight: 400;
         padding-top: 30px;
         margin-left: 5%;
-        font-size: 9px;
+        font-size: 11px;
     }
 
     .page1 h2 {
         font-weight: 300;
-        font-size: 7px;
+        font-size: 10px;
     }
 
     .page1 h1::after{
