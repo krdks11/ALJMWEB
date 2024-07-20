@@ -660,8 +660,16 @@ section.second {
 .box p {
     color: #000000;
 }
-    section.first {
-        /* gap: 10px; */
+}
+
+@media (max-width : 456px) {
+    .page2 h1 {
+        font-size: 40px;
+    }
+
+    section.first div {
+        width: 300px;
+        height: 350px;
     }
 }
 
@@ -675,6 +683,15 @@ section.second {
         padding-top: 30px;
         margin-left: 5%;
         font-size: 18px;
+    }
+
+    .page2 h1 {
+        font-size: 35px;
+    }
+
+    section.first div {
+        width: 250px;
+        height: 300px;
     }
 
     .page1 h2 {
