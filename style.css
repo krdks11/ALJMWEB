@@ -49,6 +49,16 @@ nav ul {
     color: white;
 }
 
+.close-btn {
+    font-size: 40px;
+    color: white;
+    line-height: 90px;
+    position: absolute;
+    right: 2rem;
+    top: 0.3rem;
+    cursor: pointer;
+}
+
 nav ul li a {
     text-decoration: none;
     color: inherit;
@@ -81,6 +91,8 @@ nav ul li a:hover {
     font-size: 30px;
     color: white;
     line-height: 90px;
+    cursor: pointer;
+    z-index: 11;
 }
 
 body {
@@ -494,36 +506,46 @@ section.second {
     }
 
     nav ul {
-        display: block;
-        position: fixed;
-        width: 45%;
-        height: 200px;
-        top: 90px;
-        right: -50%;
-        text-align: center;
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        top: 0px;
+        right: -100%;
+        flex-direction: column;
+        /* text-align: center; */
+        /* align-content: center; */
+        justify-content: center;
+        padding-top: 100px;
         background-color: rgba(255, 255, 255, 0.5);
         transition: all .5s;
+        
     }
+
 
     nav ul li a {
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: inherit;
         color: black;
-        border-bottom: 2px solid rgb(134, 194, 50);
         border-radius: 0px;
         font-size: 20px;
-        height: 38.8px;
+        height: 3rem;
+        margin-bottom: 20px;
     }
 
     nav ul li a:hover {
-        background-color: #86C232;
-        color: white;
+        background-color: rgba(255, 255, 255, 0.5);
         top: 0px;
-        font-size: 21px;
+        font-size: 22px;
+        box-shadow: none;
     }
 
     #checkbtn:checked~ul {
         right: 0px;
+    }
+
+    #checkbtn:checked ~ .hamburger {
+        display: none;
     }
 
     .page1 h1 {
@@ -620,6 +642,14 @@ section.second {
 
     .div_2 {
         width: auto;
+    }
+
+    .container_image img {
+        width: 100%;
+    }
+
+    .container_image:hover {
+        width: 200px;
     }
 }
 
