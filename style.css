@@ -50,6 +50,7 @@ nav ul {
 }
 
 .close-btn {
+    display: none;
     font-size: 40px;
     color: white;
     line-height: 90px;
@@ -546,6 +547,10 @@ section.second {
 
     #checkbtn:checked ~ .hamburger {
         display: none;
+    }
+
+    .close-btn {
+        display: inline-block;
     }
 
     .page1 h1 {
