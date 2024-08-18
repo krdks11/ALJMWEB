@@ -104,7 +104,7 @@ body {
 
 .page1 {
     width: 100%;
-    height: 90vh;
+    /* height: 90vh; */
     background-color: #474B4F;
     position: relative;
 }
@@ -117,8 +117,6 @@ body {
     color: white;
     margin-left: 5%;
     font-size: 50px;
-    /* border-bottom: 5px solid #86C232; */
-    /* added two lines fot h1::after */
     position: relative;
     width: max-content;
 }
@@ -151,7 +149,7 @@ body {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.641);
     margin-top: 15px;
-    margin-bottom: 35px;
+    margin-bottom: 7rem;
     margin-left: 5%;
     font-size: 30px;
     position: relative;
@@ -178,14 +176,15 @@ body {
     margin-inline: auto;
     height: 400px;
     overflow: hidden;
-    position: absolute;
-    bottom: 10vh;
+    position: relative;
+    bottom: 2rem;
     mask-image: linear-gradient(to right,
             rgba(0, 0, 0, 0),
             rgba(0, 0, 0, 1) 20%,
             rgba(0, 0, 0, 1) 80%,
             rgba(0, 0, 0, 0));
 }
+
 
 .container_image {
     height: 100%;
@@ -355,21 +354,16 @@ section.second {
     width: 100%;
     height: 514px;
     display: flex;
-    /* flex-wrap: wrap; */
 }
 
-.div_1 {
-    width: 50%;
-    height: 100%;
-    /* position: relative; */
-    /* overflow: hidden; */
-}
+
 
 #grid_img {
+    width: 50%;
+    height: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 50%);
-    grid-template-rows: repeat(2, 49%);
-    gap: 10px;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
     padding: 10px;
 }
 
@@ -380,14 +374,12 @@ section.second {
     border-radius: 5px;
 }
 
-.div_2 {
+.content-desc {
     width: 50%;
     padding: 20px;
-    height: 100%;
-    /* overflow: hidden; */
 }
 
-.div_2 h2 {
+.content-desc h2 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.759);
@@ -399,7 +391,7 @@ section.second {
 
 }
 
-.div_2 h1 {
+.content-desc h1 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
     display: inline-block;
@@ -410,7 +402,7 @@ section.second {
     width: max-content;
 }
 
-.div_2 h2::after {
+.content-desc h2::after {
     position: absolute;
     content: "";
     background: #86C232;
@@ -423,12 +415,12 @@ section.second {
     transition-timing-function: ease-in-out;
 }
 
-.div_2 h2:hover::after,
-.div_2 h1:hover::after {
+.content-desc h2:hover::after,
+.content-desc h1:hover::after {
     width: 0;
 }
 
-.div_2 p {
+.content-desc p {
     padding-top: 15px;
     font-size: 1.3em;
     padding-left: 2%;
@@ -436,7 +428,7 @@ section.second {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
-.div_2 h1::after {
+.content-desc h1::after {
     position: absolute;
     content: "";
     background: linear-gradient(to right, rgb(166, 255, 0), green, rgb(4, 255, 201));
@@ -452,39 +444,35 @@ section.second {
 
 /* second section end */
 
-.footer-main {
+.footer-details-small-device {
     width: 100%;
     background-color: #000;
     margin-top: 10px;
     font-family: "IBM Plex Sans", sans-serif;
     border-top: 3px solid #86C232;
-    overflow-x: hidden;
     display: flex;
 }
 
+.footer-main {
+    width: 100%;
+    background-color: #000;
+    padding-bottom: 16px;
+    font-family: "IBM Plex Sans", sans-serif;
+    display: flex;
+    justify-content: space-around;
+}
+
 .footer-details {
-    /* height: 300px; */
-    width: 30%;
-}
-
-.footer-links {
-    /* height: 300px; */
-    width: 20%;
-}
-
-.footer-service {
-    /* height: 300px; */
-    width: 20%;
-}
-
-.footer-map {
-    /* height: 300px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 30%;
 }
 
 .footer-h2 {
     color: #fff;
-    margin-top: 70px;
+    margin-top: 20px;
     width: max-content;
     position: relative;
     margin-bottom: 2rem;
@@ -523,12 +511,10 @@ footer a:hover {
     height: 100px;
     width: 80%;
     background-color: rgba(255, 255, 255, 0.14);
-    margin: 2%;
-    margin-top: 30px;
+    margin-bottom: 1rem;
     border: 1px solid white;
     border-radius: 25px;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
 }
 
@@ -545,21 +531,26 @@ footer a:hover {
 
 .footer-detail-p {
     width: 70%;
-    margin-left: 5%;
-    margin-top: 30px;
-    margin-bottom: 50px;
 }
 
-.footer-details p {
+.footer-details p, .contact-info p {
     color: rgb(166, 164, 164);
 }
 
-.footer-details i {
-    margin-left: 7%;
-    margin-right: 2%;
+.contact-info {
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.contact-info i {
+    margin-right: .7rem;
     font-size: 1.25rem;
     line-height: 35px;
     color: #86C232;
+    padding: .5rem 0;
 }
 
 footer iframe {
@@ -581,6 +572,20 @@ footer iframe {
 .footer-copyright::before {
     position: absolute;
     top: 0px;
+    left: 0px;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #474B4F;
+}
+
+.hr-grey {
+    position: relative;
+}
+
+.hr-grey::after {
+    position: absolute;
+    bottom: 0px;
     left: 0px;
     content: "";
     width: 100%;
@@ -624,11 +629,11 @@ footer iframe {
         height: 330px;
     }
 
-    .div_2 p {
+    .content-desc p {
         font-size: 1em;
     }
 
-    .div_2 h2 {
+    .content-desc h2 {
         font-size: 18.5px;
     }
 }
@@ -733,13 +738,18 @@ footer iframe {
         overflow-x: hidden;
     }
 
-    .div_2 p {
+    .content-desc p {
         font-size: 0.98em;
     }
 
-    .div_2 h2 {
+    .content-desc h2 {
         font-size: 13.5px;
     }
+
+    footer h3,footer h2 {
+        font-size: 1rem;
+    }
+
 }
 
 
@@ -789,11 +799,12 @@ footer iframe {
         flex-wrap: wrap;
     }
 
-    .div_1 {
+    #grid_img {
         width: auto;
+        height: 100%;
     }
 
-    .div_2 {
+    .content-desc {
         width: auto;
     }
 
@@ -844,6 +855,10 @@ footer iframe {
     .box p {
         color: #000000;
     }
+
+    .contact-info {
+        display: block;
+    }
 }
 
 @media (max-width : 456px) {
@@ -855,6 +870,11 @@ footer iframe {
         width: 300px;
         height: 350px;
     }
+
+    .footer-copyright {
+        font-size: .7rem;
+    }
+
 }
 
 @media (max-width : 412px) {
