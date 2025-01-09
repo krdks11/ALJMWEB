@@ -23,7 +23,7 @@ main().then((res) => {
     console.log(err);
 });
 async function main() {
-    await mongoose.connect("mongodb+srv://carbon:carbon.cloud.db@clusteraljm.3s6bi.mongodb.net/?retryWrites=true&w=majority&appName=ClusterAljm/users");
+    await mongoose.connect(process.env.RUI)
 }
 
 
