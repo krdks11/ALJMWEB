@@ -37,7 +37,7 @@ main().then((res) => {
     console.log(err);
 });
 async function main() {
-    await mongoose.connect(process.env.RUI);
+    await mongoose.connect(process.env.RUI)
 }
 
 
