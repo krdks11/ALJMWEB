@@ -4,9 +4,21 @@ const path = require("path");
 const ejsMath = require("ejs-mate");
 const methodOverride = require("method-override");
 const User = require("./models/users.js");
-const { getuid } = require("process");
-
+const session = require("express-session");
+const flash = require("connect-flash");
+require("dotenv").config();
 const app = express();
+
+const sessionOptions = {
+    secret: "codesohail@unique",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expire: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+};
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -14,6 +26,8 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride("_method"));
+app.use(session(sessionOptions));
+app.use(flash());
 
 app.engine("ejs", ejsMath);
 
@@ -23,12 +37,18 @@ main().then((res) => {
     console.log(err);
 });
 async function main() {
-    await mongoose.connect("mongodb+srv://carbon:carbon.cloud.db@clusteraljm.3s6bi.mongodb.net/?retryWrites=true&w=majority&appName=ClusterAljm/users");
+    await mongoose.connect(process.env.RUI);
 }
 
 
 app.listen(3000, () => {
     console.log("Listening on port 3000...");
+});
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.failure = req.flash("failure");
+    next();
 });
 
 app.get("/", (req, res) => {
@@ -50,16 +70,21 @@ app.post("/user", async (req, res) => {
     });
 
     console.log(newuser);
-    await newuser.save();
-    res.redirect("/");
+    await newuser.save().then((res) => {
+        req.flash("success", "Account Successfully Created!");
+    }).catch((err) => {
+        req.flash("failure", err);
+    });
+
+    res.redirect("/login");
 
 });
 
 app.get("/login", (req, res) => {
     const rcode = ""; // Define ls here with an appropriate value
     res.render("userlogin.ejs", { rcode }); // Pass ls as an object property
-  });
-  
+});
+
 
 app.get("/new", (req, res) => {
     res.render("registeruser.ejs");
@@ -85,12 +110,12 @@ app.post("/login", async (req, res) => {
             }
             else {
                 rcode = "Wrong password!";
-                res.render("userlogin.ejs",{ rcode });
+                res.render("userlogin.ejs", { rcode });
             }
         }
     } else {
         rcode = "Username not found!";
-        res.render("userlogin.ejs",{ rcode });
+        res.render("userlogin.ejs", { rcode });
     }
 
 });
