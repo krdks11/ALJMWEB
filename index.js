@@ -3,20 +3,22 @@ const mongoose = require("mongoose");
 const path = require("path");
 const ejsMath = require("ejs-mate");
 const methodOverride = require("method-override");
-const User = require("./models/users.js");
+const Aljmuser = require("./models/users.js");
 const session = require("express-session");
-const flash = require("connect-flash");
+const flash = require('connect-flash');
+const bcrypt = require("bcrypt");
+const Contact = require("./models/contact.js");
 require("dotenv").config();
 const app = express();
 
-const sessionOptions = {
-    secret: "codesohail@unique",
+const sessionConfig = {
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expire: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
     }
 };
 
@@ -26,7 +28,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride("_method"));
-app.use(session(sessionOptions));
+app.use(session(sessionConfig));
 app.use(flash());
 
 app.engine("ejs", ejsMath);
@@ -46,8 +48,12 @@ app.listen(3000, () => {
 });
 
 app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.failure = req.flash("failure");
+    res.locals.currentUser = req.session.userId;
+    res.locals.username = req.session.username;
+    res.locals.isAdmin = req.session.username === 'code';
+    res.locals.success = req.flash('success');
+    res.locals.failure = req.flash('failure');
+    res.locals.error = req.flash('error');
     next();
 });
 
@@ -56,33 +62,40 @@ app.get("/", (req, res) => {
 });
 
 app.post("/user", async (req, res) => {
-    const { fname, lname, uname, pass, email, country, state, city } = req.body;
+    try {
+        const { fname, lname, uname, pass, email } = req.body;
+        
+        const existingUser = await Aljmuser.findOne({ 
+            $or: [{ email }, { uname }] 
+        });
+        
+        if (existingUser) {
+            req.flash('failure', "Username or email already exists");
+            return res.redirect("/new");
+        }
 
-    const newuser = await new User({
-        fname: fname,
-        lname: lname,
-        uname: uname,
-        pass: pass,
-        email: email,
-        country: country,
-        state: state,
-        city: city
-    });
+        const hashedPassword = await bcrypt.hash(pass, 12);
 
-    console.log(newuser);
-    await newuser.save().then((res) => {
-        req.flash("success", "Account Successfully Created!");
-    }).catch((err) => {
-        req.flash("failure", err);
-    });
+        const newuser = new Aljmuser({
+            fname,
+            lname,
+            uname,
+            pass: hashedPassword,
+            email
+        });
 
-    res.redirect("/login");
-
+        await newuser.save();
+        req.flash('success', "Account Successfully Created!");
+        res.redirect("/login");
+    } catch (err) {
+        console.error(err);
+        req.flash('failure', "Error creating account");
+        res.redirect("/new");
+    }
 });
 
 app.get("/login", (req, res) => {
-    const rcode = ""; // Define ls here with an appropriate value
-    res.render("userlogin.ejs", { rcode }); // Pass ls as an object property
+    res.render("userlogin.ejs", { rcode: null });
 });
 
 
@@ -94,29 +107,98 @@ app.get("/contact", (req, res) => {
     res.render("contact.ejs");
 });
 
+app.post("/contact", async (req, res) => {
+    try {
+        const { name, email, service, location, message } = req.body;
+        
+        const newContact = new Contact({
+            name,
+            email,
+            service,
+            location,
+            message
+        });
+
+        await newContact.save();
+        req.flash('success', `Thank you for your message. We will get back to you soon regarding your ${service} service request in ${location}.`);
+        res.redirect('/contact');
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'There was an error sending your message. Please try again.');
+        res.redirect('/contact');
+    }
+});
+
 app.get("/about", (req, res) => {
     res.render("about.ejs");
 });
 
 app.post("/login", async (req, res) => {
-    const { uname, pass } = req.body;
-    let rcode;
-    const getUser = await User.find({ uname: uname });
-    if (getUser.length != 0) {
-        if (uname == getUser[0].uname) {
-            if (pass == getUser[0].pass) {
-                console.log("Login success");
-                res.redirect("/");
-            }
-            else {
-                rcode = "Wrong password!";
-                res.render("userlogin.ejs", { rcode });
-            }
+    try {
+        const { uname, pass } = req.body;
+        const user = await Aljmuser.findOne({ uname });
+        
+        if (!user) {
+            req.flash('error', 'Invalid username or password');
+            return res.redirect('/login');
         }
-    } else {
-        rcode = "Username not found!";
-        res.render("userlogin.ejs", { rcode });
-    }
+        
+        const isValid = await bcrypt.compare(pass, user.pass);
+        if (!isValid) {
+            req.flash('error', 'Invalid username or password');
+            return res.redirect('/login');
+        }
 
+        req.session.userId = user._id;
+        req.session.username = user.uname;
+        res.redirect('/');
+    } catch (e) {
+        console.error(e);
+        req.flash('error', 'Something went wrong!');
+        res.redirect('/login');
+    }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/login");
+});
+
+app.get('/admin/messages', async (req, res) => {
+    try {
+        if (!req.session.userId) {
+            req.flash('error', 'Please login first');
+            return res.redirect('/login');
+        }
+        
+        if (req.session.username !== 'code') {
+            req.flash('error', 'Access denied');
+            return res.redirect('/');
+        }
+        
+        const messages = await Contact.find().sort({ createdAt: -1 });
+        res.render('admin/messages', { messages });
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Error loading messages');
+        res.redirect('/');
+    }
+});
+
+app.delete('/admin/messages/:id', async (req, res) => {
+    try {
+        if (!req.session.userId || req.session.username !== 'code') {
+            req.flash('error', 'Access denied');
+            return res.redirect('/');
+        }
+        
+        await Contact.findByIdAndDelete(req.params.id);
+        req.flash('success', 'Message deleted successfully');
+        res.redirect('/admin/messages');
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Error deleting message');
+        res.redirect('/admin/messages');
+    }
 });
 

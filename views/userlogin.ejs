@@ -1,34 +1,38 @@
 <% layout("/layouts/headerFooter.ejs") %>
 
-  <div class="page">
-    <h4><%= success %> <%= failure %></h4>
-    <h2 class="login-title">Login To ALJM</h2>
-    <div class="login-box">
-      <form action="/login" method="POST">
-        <div class="input-box">
-          <!-- <label for="uname">Username</label><br> -->
-          <input type="text" placeholder="Username" name="uname" required>
-          <i class="fa-solid fa-user"></i>
-        </div>
-        <br>
-        <div class="input-box">
-          <!-- <label for="pass">Password</label><br> -->
-          <input type="password" placeholder="Password" name="pass" required>
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <br>
-        <div class="forget-remem">
-          <label><input type="checkbox">Remember me</label>
-          <a href="#">forget password?</a>
-        </div>
+<div class="page">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <% if (error && error.length > 0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
 
-          <button class="btn">Login</button>
-          <p class="login-response">
-            <%= rcode %>
-        </p>
-        <br><br>
-        <p>Don't have a account? <a href="/new" class="create-anchor">Register</a></p>
-      </form>
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Login</h2>
+                        
+                        <form action="/login" method="POST">
+                            <div class="mb-3">
+                                <label for="uname" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="uname" name="uname" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pass" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="pass" name="pass" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                        
+                        <div class="text-center mt-3">
+                            <p class="mb-0">Don't have an account? <a href="/new">Register</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-  </div>
+</div>

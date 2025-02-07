@@ -22,17 +22,13 @@ const usersSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    country: {
-        type: String
-    },
-    state: {
-        type: String
-    },
-    city: {
-        type: String
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     }
 });
 
-const User = mongoose.model("User",usersSchema);
+const Aljmuser = mongoose.model("Aljmuser", usersSchema);
 
-module.exports = User;
+module.exports = Aljmuser;

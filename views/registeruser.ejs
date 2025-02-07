@@ -1,44 +1,64 @@
 <% layout("/layouts/headerFooter.ejs") %>
 
 <div class="page">
-    <h2 class="login-title">Create New Account</h2>
-    <div class="login-page">
-        <form action="/user" method="POST">
-            <div class="input-box">
-                <label for="fname">First Name</label><br>
-                <input type="text" placeholder="Fisrt name" name="fname" required>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <!-- Add flash messages section -->
+                <% if (success && success.length > 0) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <%= success %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+                
+                <% if (failure && failure.length > 0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= failure %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Create Account</h2>
+                        
+                        <form action="/user" method="POST">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fname" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="fname" name="fname" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lname" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lname" name="lname" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="uname" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="uname" name="uname" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pass" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="pass" name="pass" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                        
+                        <div class="text-center mt-3">
+                            <p class="mb-0">Already have an account? <a href="/login">Login</a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="input-box">
-                <label for="lname">Last Name</label><br>
-                <input type="text" placeholder="Last name" name="lname" required>
-            </div>
-            <div class="input-box">
-                <label for="uname">Username</label><br>
-                <input type="text" placeholder="Username" name="uname" required>
-            </div>
-            <div class="input-box">
-                <label for="pass">Password</label><br>
-                <input type="password" placeholder="Password" name="pass" required>
-            </div>
-            <div class="input-box">
-                <label for="email">Email</label><br>
-                <input type="email" placeholder="Email Id" name="email" required>
-            </div>
-            <div class="input-box">
-                <label for="country">Country</label><br>
-                <input type="text" placeholder="Country Name" name="country" required>
-            </div>
-            <div class="input-box">
-                <label for="state">State</label><br>
-                <input type="text" placeholder="state Name" name="state" required>
-            </div>
-            <div class="input-box">
-                <label for="city">City</label><br>
-                <input type="text" placeholder="city Name" name="city" required>
-            </div>
-            <button class="btn btn-register">Create</button>
-          </form>
+        </div>
     </div>
-    
-  
 </div>
