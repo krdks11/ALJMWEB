@@ -10,15 +10,15 @@ const bcrypt = require("bcrypt");
 const Contact = require("./models/contact.js");
 require("dotenv").config();
 const app = express();
+const port = process.env.PORT || 3000;
 
 const sessionConfig = {
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'fallbacksecret',
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     }
 };
 
@@ -33,18 +33,17 @@ app.use(flash());
 
 app.engine("ejs", ejsMath);
 
-main().then((res) => {
-    console.log("connected to database");
-}).catch((err) => {
-    console.log(err);
-});
-async function main() {
-    await mongoose.connect(process.env.RUI)
-}
+mongoose.connect(process.env.RUI)
+    .then(() => {
+        console.log('Database Connected!')
+    })
+    .catch(err => {
+        console.log('MongoDB connection error:')
+        console.log(err)
+    });
 
-
-app.listen(3000, () => {
-    console.log("Listening on port 3000...");
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 app.use((req, res, next) => {
