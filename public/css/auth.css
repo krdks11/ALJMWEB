@@ -1,7 +1,10 @@
+/* Remove all header/footer related styles */
+/* Keep only page and component specific styles */
+
 .page {
     min-height: 80vh;
     padding: 20px 0;
-    background: #474B4F; /* Main page background color */
+    background: #474B4F;
 }
 
 .page .card {
@@ -270,7 +273,7 @@
     color: white;
 }
 
-/* Add these styles for the admin messages page */
+/* Table styles for admin messages */
 .page .table-responsive {
     background: #222629;
     border-radius: 15px;
@@ -280,10 +283,6 @@
 .page .table {
     color: #C5C6C7;
     margin-bottom: 0;
-}
-
-.page .table thead {
-    background-color: #222629;
 }
 
 .page .table thead th {
@@ -302,13 +301,52 @@
     background-color: rgba(134, 194, 50, 0.1);
 }
 
-.page .table td {
-    vertical-align: middle;
-    padding: 1rem;
-}
+/* Mobile table styles */
+@media (max-width: 768px) {
+    .page .table-responsive {
+        overflow-x: hidden;
+    }
 
-.page .table .btn {
-    margin: 0 0.25rem;
+    .page .table thead {
+        display: none;
+    }
+
+    .page .table, 
+    .page .table tbody, 
+    .page .table tr, 
+    .page .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .page .table tr {
+        margin-bottom: 1.5rem;
+        background: #222629;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .page .table td {
+        text-align: left;
+        padding: 0.5rem 0;
+        border: none;
+    }
+
+    .page .table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #86C232;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .page .btn-group-mobile {
+        display: flex;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
 }
 
 /* Modal styles */
@@ -360,15 +398,9 @@
     border-color: #bb2d3b;
 }
 
-/* Make sure header and footer styles are applied */
-header, footer {
-    background-color: #222629;
-    color: #C5C6C7;
-}
-
-/* Ensure consistent spacing */
+/* Keep other styles but remove footer-related ones */
 .page {
-    min-height: calc(100vh - 200px); /* Adjust based on your header/footer height */
+    min-height: calc(100vh - 200px);
     padding: 2rem 0;
     background: #474B4F;
 }
