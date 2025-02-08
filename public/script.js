@@ -4,17 +4,33 @@ let footerMap;
 let footerService;
 let detailSmallDevice;
 let originalContainer;
-footerDetail = document.querySelector(".footer-details");
-detailSmallDevice = document.querySelector(".footer-details-small-device");
-originalContainer = document.querySelector(".footer-main");
-footerMap = document.querySelector(".footer-map");
-footerService = document.querySelector(".footer-service");
 
-document.querySelectorAll('.div_box').forEach(divBox => {
-    const gridImg = divBox.querySelector('#grid_img');
-    if (gridImg) {
-        originalPositions.push({ parent: divBox, element: gridImg, nextSibling: gridImg.nextSibling });
-    }
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize footer elements
+    footerDetail = document.querySelector(".footer-details");
+    detailSmallDevice = document.querySelector(".footer-details-small-device");
+    originalContainer = document.querySelector(".footer-main");
+    footerMap = document.querySelector(".footer-map");
+    footerService = document.querySelector(".footer-service");
+
+    // Store original image positions
+    document.querySelectorAll('.div_box').forEach(divBox => {
+        const gridImg = divBox.querySelector('#grid_img');
+        if (gridImg) {
+            originalPositions.push({ parent: divBox, element: gridImg, nextSibling: gridImg.nextSibling });
+        }
+    });
+
+    // Initial calls
+    newImgOrder();
+    handleFooterLayout();
+
+    // Add event listeners
+    window.addEventListener('resize', () => {
+        newImgOrder();
+        handleFooterLayout();
+    });
 });
 
 function newImgOrder() {
@@ -30,44 +46,50 @@ function newImgOrder() {
             parent.insertBefore(element, nextSibling);
         });
     }
+}
+
+function handleFooterLayout() {
+    if (!footerDetail || !detailSmallDevice || !originalContainer || !footerMap || !footerService) {
+        return; // Exit if elements don't exist
+    }
 
     if (window.innerWidth <= 850) {
-        footerDetail.remove();
-        detailSmallDevice.appendChild(footerDetail);
-        footerDetail.style.width = "100%";
-        detailSmallDevice.style.padding = "1rem";
-        originalContainer.classList.add("hr-grey");
-    }
-    else {
-        footerDetail.remove();
-        originalContainer.prepend(footerDetail);
-        footerDetail.style.width = "";
-        detailSmallDevice.style.padding = "";
-        originalContainer.classList.remove("hr-grey");
+        if (footerDetail.parentElement !== detailSmallDevice) {
+            footerDetail.remove();
+            detailSmallDevice.appendChild(footerDetail);
+            footerDetail.style.width = "100%";
+            detailSmallDevice.style.padding = "1rem";
+            originalContainer.classList.add("hr-grey");
+        }
+    } else {
+        if (footerDetail.parentElement !== originalContainer) {
+            footerDetail.remove();
+            originalContainer.prepend(footerDetail);
+            footerDetail.style.width = "";
+            detailSmallDevice.style.padding = "";
+            originalContainer.classList.remove("hr-grey");
+        }
     }
 
     if (window.innerWidth <= 530) {
-        footerMap.remove();
-    }
-    else {
-        footerService.insertAdjacentElement('afterend',footerMap);
+        if (footerMap.parentElement) {
+            footerMap.remove();
+        }
+    } else {
+        if (!footerMap.parentElement && footerService) {
+            footerService.insertAdjacentElement('afterend', footerMap);
+        }
     }
 }
 
-window.addEventListener('resize', newImgOrder);
-
-// Initial call to set the correct order based on the current window size
-newImgOrder();
-
+// Header scroll functionality
 var prevScrollPos = window.pageYOffset;
 window.onscroll = function() {
-  var currentScrollPos = window.pageYOffset;
-  if (prevScrollPos > currentScrollPos) {
-    // Scrolling up, show the navbar
-    document.querySelector("header").style.top = "0";
-  } else {
-    // Scrolling down, hide the navbar
-    document.querySelector("header").style.top = "-90px"; // Adjust the value as needed
-  }
-  prevScrollPos = currentScrollPos;
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollPos > currentScrollPos) {
+        document.querySelector("header").style.top = "0";
+    } else {
+        document.querySelector("header").style.top = "-90px";
+    }
+    prevScrollPos = currentScrollPos;
 };

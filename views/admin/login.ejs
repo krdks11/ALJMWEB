@@ -13,26 +13,22 @@
 
                 <div class="card shadow-lg">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Login</h2>
+                        <h2 class="text-center mb-4">Admin Login</h2>
                         
-                        <form action="/login" method="POST">
+                        <form action="/admin/login" method="POST">
                             <div class="mb-3">
-                                <label for="uname" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="uname" name="uname" required>
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
                             </div>
                             <div class="mb-3">
-                                <label for="pass" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="pass" name="pass" required>
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
-                        
-                        <div class="text-center mt-3">
-                            <p class="mb-0">Don't have an account? <a href="/new">Register</a></p>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> 
