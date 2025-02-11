@@ -110,11 +110,26 @@ Regular updates include:
 
 ISC License - Created by codeXsohail
 
-## 🤝 Support
+## 🤝 Support & Credits
 
-For technical support or business inquiries:
-- Technical: Contact the development team
-- Business: Contact Al Jamiya Building Maintenance directly
+### Development Team
+- **Sohail Ahmad** (GitHub: [@CodeXsohail](https://github.com/CodeXsohail))
+  - Lead Developer
+  - Full-stack Development
+  - Frontend & Backend Implementation
+  - [LinkedIn Profile](https://www.linkedin.com/in/sohail-ahmad-1b6809258)
+
+- **Deepak Sharma** (GitHub: [@krdks11](https://github.com/krdks11))
+  - UI/UX Designing
+  - Content Management
+  - Frontend Design
+  - Service Content Writing
+  - [LinkedIn Profile](https://www.linkedin.com/in/deepak-sharma-9367a11b4)
+
+### Contact Information
+For business inquiries:
+- **Technical Support:** Contact development team through their LinkedIn profiles
+- **Business Inquiries:** Contact Al Jamiya Building Maintenance directly
 
 ---
 © 2024 Al Jamiya Building Maintenance. All Rights Reserved.
