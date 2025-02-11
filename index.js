@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -6,7 +7,6 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require('connect-flash');
 const Contact = require("./models/contact.js");
-require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -45,14 +45,18 @@ app.use((req, res, next) => {
 });
 
 // Database connection
-mongoose.connect(process.env.RUI)
-    .then(() => {
-        console.log('Database Connected!')
-    })
-    .catch(err => {
-        console.log('MongoDB connection error:')
-        console.log(err)
-    });
+mongoose.connect(process.env.RUI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'aljamiya' // Explicitly specify database name
+})
+.then(() => {
+    console.log('Connected to aljamiya database!')
+})
+.catch(err => {
+    console.error('MongoDB connection error:')
+    console.error(err)
+});
 
 // Routes
 app.get("/", (req, res) => {
