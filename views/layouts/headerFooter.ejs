@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL JAMIYA BUILDING MAINTENANCE</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- Original styles -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- Auth pages styles -->
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <header>
+        <div class="title-nav-containter">
+            <div class="title">Al Jamiya Building Maintenance</div>
+            <nav>
+                <input type="checkbox" id="checkbtn">
+                <label for="checkbtn" class="hamburger"><i class="fa-solid fa-bars"></i></label>
+                <ul>
+                    <li><label for="checkbtn" class="close-btn"><i class="fa-solid fa-xmark"></i></label></li>
+                    <li><a href="/">Home</a></li>
+                    <% if (currentUser && isAdmin) { %>
+                        <li><a href="/admin/messages">Messages</a></li>
+                    <% } else { %>
+                        <li><a href="/#kitchen">Service</a></li>
+                    <% } %>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/about">About</a></li>
+                    <% if (currentUser && isAdmin) { %>
+                        <li><a href="/logout">Logout</a></li>
+                    <% } %>
+                </ul>
+
+            </nav>
+
+        </div>
+    </header>
+
+
+
+
+<main><%- body %></main>
+
+
+
+    <footer>
+        <div class="footer-details-small-device hr-grey"></div>
+        <div class="footer-main">
+            <div class="footer-details">
+                <div class="footer-badge">
+                    <img src="/image/building-icon.jpg" alt="logo">
+                    <h3>Al Jamiya Building Maintenance Company</h3>
+                </div>
+                <p class="footer-detail-p">Choose us for unparalleled expertise, reliability, and efficiency in
+                    maintenance
+                    services, ensuring your
+                    property remains in pristine condition with minimal hassle and maximum satisfaction.</p>
+            </div>
+            <div class="footer-links">
+                <h2 class="footer-h2">Useful Links</h2>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/#kitchen">Services</a></li>
+                    <li><a href="/#all-services">All Services</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                </ul>
+
+            </div>
+            <div class="footer-service">
+                <h2 class="footer-h2">Our Services</h2>
+                <ul>
+                    <li><a href="/#door">Door</a></li>
+                    <li><a href="/#kitchen">Kitchen</a></li>
+                    <li><a href="/#indoor">Indoor</a></li>
+                    <li><a href="/#outdoor">Outdoor</a></li>
+                    <li><a href="/#all-services">Other</a></li>
+                </ul>
+            </div>
+            <div class="footer-map">
+                <h2 class="footer-h2">Find us</h2>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3607.844883625817!2d55.31539817523776!3d25.275802977660472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5dc402a0e389%3A0xe073f5d8356acf16!2sAl%20Jamia%20Building!5e0!3m2!1sen!2sin!4v1722949139992!5m2!1sen!2sin"
+                    style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        <div class="contact-info">
+            <p><i class="fa-solid fa-phone"></i>+97153271117</p>
+            <p><i class="fa-regular fa-envelope"></i> aljamiyadubai@gmail.com</p>
+            <p><i class="fa-solid fa-location-dot"></i> 11 4a St - Deira - Dubai - UAE</p>
+        </div>
+        <div class="footer-copyright">Copyright &#169; 2024 AL JAMIYA BUILDING MAINTENANCE</div>
+    </footer>
+    <script src="/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

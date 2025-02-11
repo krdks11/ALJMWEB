@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="/css/auth.css">
+<% layout("/layouts/headerFooter.ejs") %>
+
+
+<div class="page">
+    <div class="container py-5">
+        <h1 class="text-center mb-5">Contact Messages</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <% if (success && success.length > 0) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <%= success %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+                
+                <% if (error && error.length > 0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Service</th>
+                                        <th>Location</th>
+                                        <th>Message</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% messages.forEach(message => { %>
+                                        <tr>
+                                            <td data-label="Date"><%= message.createdAt.toLocaleDateString() %></td>
+                                            <td data-label="Name"><%= message.name %></td>
+                                            <td data-label="Email"><%= message.email %></td>
+                                            <td data-label="Service"><%= message.service %></td>
+                                            <td data-label="Location"><%= message.location %></td>
+                                            <td data-label="Message"><%= message.message.substring(0, 50) %>...</td>
+                                            <td data-label="Actions">
+                                                <div class="btn-group-mobile">
+                                                    <button type="button" class="btn btn-info btn-sm" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#messageModal"
+                                                            onclick="showMessage('<%= message.name %>', '<%= message.email %>', '<%= message.service %>', '<%= message.location %>', `<%= message.message.replace(/`/g, '\\`') %>`, '<%= message.createdAt.toLocaleDateString() %>')">
+                                                        View
+                                                    </button>
+                                                    <form action="/admin/messages/<%= message._id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalLabel">Message Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                <p><strong>Name:</strong> <span id="modalName"></span></p>
+                <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p><strong>Service:</strong> <span id="modalService"></span></p>
+                <p><strong>Location:</strong> <span id="modalLocation"></span></p>
+                <p><strong>Message:</strong></p>
+                <p id="modalMessage" style="white-space: pre-wrap;"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showMessage(name, email, service, location, message, date) {
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('modalEmail').textContent = email;
+    document.getElementById('modalService').textContent = service;
+    document.getElementById('modalLocation').textContent = location;
+    document.getElementById('modalMessage').textContent = message;
+    document.getElementById('modalDate').textContent = date;
+}
+</script> 
