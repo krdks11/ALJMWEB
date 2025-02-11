@@ -105,7 +105,7 @@ app.post("/admin/login", async (req, res) => {
     try {
         const { username, password } = req.body;
         
-        if (username !== 'admin' || password !== 'aljm2025') {
+        if (username !== process.env.ADMIN || password !== process.env.ADMIN_PASSWORD) {
             req.flash('error', 'Invalid credentials');
             return res.redirect('/admin');
         }
