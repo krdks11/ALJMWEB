@@ -1,0 +1,57 @@
+<%- layout('layouts/headerFooter') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Error <%= err.statusCode %>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="image/error.png" alt="Error illustration" class="img-fluid mb-4" style="max-width: 200px;">
+                        <h2 class="text-danger"><%= err.message %></h2>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="/" class="btn btn-primary me-2">
+                            <i class="fas fa-home me-1"></i> Return Home
+                        </a>
+                        <a href="javascript:history.back()" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Go Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <% if (process.env.NODE_ENV === 'development' && err.stack) { %>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Stack Trace</h5>
+                </div>
+                <div class="card-body">
+                    <pre class="text-danger"><%= err.stack %></pre>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Add some custom styles -->
+<style>
+    .card {
+        border-radius: 15px;
+    }
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style> 
