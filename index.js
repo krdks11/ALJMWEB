@@ -5,8 +5,12 @@ const path = require("path");
 const ejsMath = require("ejs-mate");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const Contact = require("./models/contact.js");
+const WrapAsync = require("./utils/WrapAsync.js");
+const ExpressError = require("./utils/CustomError.js");
+const adminRoutes = require("./routes/admin.js");
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -20,11 +24,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride("_method"));
 
+// Database connection
+mongoose.connect(process.env.RUI, {
+    dbName: 'aljamiya'
+})
+.then(() => {
+    console.log('Connected to aljamiya database!')
+})
+.catch(err => {
+    console.error('MongoDB connection error:')
+    console.error(err)
+});
+
 // Session configuration
 const sessionConfig = {
     secret: process.env.SESSION_SECRET || 'fallbacksecret',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.RUI,
+        dbName: 'aljamiya',
+        touchAfter: 24 * 3600 // time period in seconds
+    }),
     cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
@@ -44,19 +65,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Database connection
-mongoose.connect(process.env.RUI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: 'aljamiya' // Explicitly specify database name
-})
-.then(() => {
-    console.log('Connected to aljamiya database!')
-})
-.catch(err => {
-    console.error('MongoDB connection error:')
-    console.error(err)
-});
+app.use("/admin", adminRoutes);
 
 // Routes
 app.get("/", (req, res) => {
@@ -67,106 +76,48 @@ app.get("/contact", (req, res) => {
     res.render("contact.ejs");
 });
 
-app.post("/contact", async (req, res) => {
-    try {
-        const { name, email, service, location, message } = req.body;
-        
-        const newContact = new Contact({
-            name,
-            email,
-            service,
-            location,
-            message
-        });
+app.post("/contact", WrapAsync(async (req, res) => {
+    const { name, email, service, location, message } = req.body;
 
-        await newContact.save();
-        req.flash('success', `Thank you for your message. We will get back to you soon regarding your ${service} service request in ${location}.`);
-        res.redirect('/contact');
-    } catch (err) {
-        console.error(err);
-        req.flash('error', 'There was an error sending your message. Please try again.');
-        res.redirect('/contact');
+    // Server-side validation
+    const errors = [];
+    if (!name || name.trim().length < 2) errors.push('Name is required (minimum 2 characters)');
+    if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) errors.push('Valid email is required');
+    if (!service) errors.push('Service type is required');
+    if (!location || location.trim().length < 2) errors.push('Location is required');
+    if (!message || message.trim().length < 10) errors.push('Message is required (minimum 10 characters)');
+
+    if (errors.length > 0) {
+        req.flash('error', errors.join(', '));
+        return res.redirect('/contact');
     }
-});
+
+    const newContact = new Contact({
+        name: name.trim(),
+        email: email.trim(),
+        service,
+        location: location.trim(),
+        message: message.trim()
+    });
+
+    await newContact.save();
+    req.flash('success', `Thank you for your message. We will get back to you soon regarding your ${service} service request in ${location}.`);
+    res.redirect('/contact');
+}));
 
 app.get("/about", (req, res) => {
     res.render("about.ejs");
 });
 
-// Admin routes
-app.get("/admin", (req, res) => {
-    if (req.session.isAdmin) {
-        return res.redirect('/admin/messages');
-    }
-    res.render("admin/login.ejs");
+
+app.all("*", (req, res, next) => {
+    next(new ExpressError("Page Not Found", 404));
 });
 
-app.post("/admin/login", async (req, res) => {
-    try {
-        const { username, password } = req.body;
-        
-        if (username !== process.env.ADMIN || password !== process.env.ADMIN_PASSWORD) {
-            req.flash('error', 'Invalid credentials');
-            return res.redirect('/admin');
-        }
-
-        req.session.userId = 'admin';
-        req.session.isAdmin = true;
-        
-        req.session.save((err) => {
-            if (err) {
-                console.error('Session save error:', err);
-                req.flash('error', 'Error during login');
-                return res.redirect('/admin');
-            }
-            res.redirect('/admin/messages');
-        });
-    } catch (e) {
-        console.error('Login error:', e);
-        req.flash('error', 'Something went wrong!');
-        res.redirect('/admin');
-    }
-});
-
-app.get("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('Logout error:', err);
-        }
-        res.redirect("/admin");
-    });
-});
-
-// Admin message management
-app.get('/admin/messages', async (req, res) => {
-    try {
-        if (!req.session.isAdmin) {
-            return res.redirect('/admin');
-        }
-        
-        const messages = await Contact.find().sort({ createdAt: -1 });
-        res.render('admin/messages', { messages });
-    } catch (err) {
-        console.error(err);
-        req.flash('error', 'Error loading messages');
-        res.redirect('/');
-    }
-});
-
-app.delete('/admin/messages/:id', async (req, res) => {
-    try {
-        if (!req.session.isAdmin) {
-            return res.redirect('/admin');
-        }
-        
-        await Contact.findByIdAndDelete(req.params.id);
-        req.flash('success', 'Message deleted successfully');
-        res.redirect('/admin/messages');
-    } catch (err) {
-        console.error(err);
-        req.flash('error', 'Error deleting message');
-        res.redirect('/admin/messages');
-    }
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Oh No, Something Went Wrong!";
+    res.status(statusCode).render("error.ejs", { err });
 });
 
 app.listen(port, () => {
